@@ -7,7 +7,7 @@
 		WebAssembly
 			.instantiateStreaming(fetch("lib.wasm"), go.importObject)
 	.then((result) => {
-		go.run(ruslt.instance);
+		go.run(result.instance);
 	});
 	</script>
 	</head>
