@@ -1,4 +1,4 @@
-www/lib.wasm: main.go www/wasm_exec.js
+www/lib.wasm: main.go components/*.go www/wasm_exec.js
 	@GOOS=js GOARCH=wasm go build -o www/lib.wasm main.go
 
 www/wasm_exec.js:

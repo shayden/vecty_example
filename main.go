@@ -2,6 +2,7 @@ package main
 
 import (
 	"strconv"
+	component "vectyexample/components"
 
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
@@ -11,6 +12,8 @@ import (
 
 func main() {
 	vecty.SetTitle("Hello Vecty!")
+	vecty.AddStylesheet("//styles.css")
+	vecty.AddStylesheet("https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css")
 	vecty.RenderBody(&PageView{})
 }
 
@@ -33,19 +36,36 @@ func (p *PageView) onClicked(event *vecty.Event) {
 }
 
 func (p *PageView) Render() vecty.ComponentOrHTML {
-	return elem.Body(
-		elem.Div(vecty.Text("Hi!")),
-		elem.Div(vecty.Text("Hello Vecty! Whee")),
-		elem.Div(vecty.Text(strconv.FormatBool(p.Clicked))),
-		elem.Div(
-			elem.Input(
-				vecty.Markup(
-					prop.Type(prop.TypeButton),
-					event.Click(
-						p.onClicked,
+	container := component.NewContainer(
+		component.NewRow(
+			component.NewColumn(
+				elem.Div(vecty.Text("Hi!")),
+			),
+			component.NewColumn(),
+			component.NewColumn(),
+		),
+		component.NewRow(
+			component.NewColumn(
+				vecty.Text("Hello Vecty! Whee"),
+			),
+			component.NewColumn(
+				vecty.Text(strconv.FormatBool(p.Clicked)),
+			),
+			component.NewColumn(
+				elem.Input(
+					vecty.Markup(
+						vecty.Class("btn"),
+						vecty.Class("btn-primary"),
+						prop.Type(prop.TypeButton),
+						event.Click(
+							p.onClicked,
+						),
 					),
 				),
 			),
 		),
+	)
+	return elem.Body(
+		container,
 	)
 }
